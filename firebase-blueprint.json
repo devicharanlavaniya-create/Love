@@ -1,0 +1,539 @@
+{
+  "entities": {
+    "SchoolProfile": {
+      "title": "SchoolProfile",
+      "description": "School workspace configuration and administrator metadata for the signed-in user.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the workspace owner."
+        },
+        "schoolName": {
+          "type": "string",
+          "description": "Name of the school or institution."
+        },
+        "academicYear": {
+          "type": "string",
+          "description": "Current academic year label (e.g., 2026-2027)."
+        },
+        "principalName": {
+          "type": "string",
+          "description": "Principal or lead administrator name."
+        },
+        "motto": {
+          "type": "string",
+          "description": "Optional school motto or tagline."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": ["userId", "schoolName", "academicYear", "principalName", "createdAt", "updatedAt"]
+    },
+    "SchoolClass": {
+      "title": "SchoolClass",
+      "description": "An academic class or homeroom section.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the class section (e.g., Grade 10 - A)."
+        },
+        "gradeLevel": {
+          "type": "string",
+          "description": "Grade level label (e.g., Grade 10)."
+        },
+        "roomNumber": {
+          "type": "string",
+          "description": "Assigned room number."
+        },
+        "homeroomTeacher": {
+          "type": "string",
+          "description": "Optional homeroom teacher name."
+        },
+        "scheduleSummary": {
+          "type": "string",
+          "description": "Optional daily schedule summary."
+        },
+        "capacity": {
+          "type": "integer",
+          "description": "Maximum student capacity."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": ["name", "gradeLevel", "roomNumber", "capacity", "createdAt", "updatedAt"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "An enrolled student record linked to a class.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Student full name."
+        },
+        "rollNumber": {
+          "type": "string",
+          "description": "Student roll or admission number."
+        },
+        "classId": {
+          "type": "string",
+          "description": "ID of the SchoolClass document."
+        },
+        "className": {
+          "type": "string",
+          "description": "Denormalized class display name."
+        },
+        "guardianName": {
+          "type": "string",
+          "description": "Optional parent or guardian name."
+        },
+        "guardianPhone": {
+          "type": "string",
+          "description": "Optional guardian contact phone."
+        },
+        "guardianEmail": {
+          "type": "string",
+          "description": "Optional guardian email address."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "INACTIVE", "GRADUATED"],
+          "description": "Enrollment status."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional administrative notes."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": ["fullName", "rollNumber", "classId", "className", "status", "createdAt", "updatedAt"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Daily attendance entry for a student on a specific dateKey (YYYY-MM-DD).",
+      "type": "object",
+      "properties": {
+        "studentId": {
+          "type": "string",
+          "description": "ID of the Student document."
+        },
+        "studentName": {
+          "type": "string",
+          "description": "Denormalized student name."
+        },
+        "rollNumber": {
+          "type": "string",
+          "description": "Denormalized student roll number."
+        },
+        "classId": {
+          "type": "string",
+          "description": "ID of the student's class."
+        },
+        "className": {
+          "type": "string",
+          "description": "Denormalized class name."
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "ISO local date key YYYY-MM-DD."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PRESENT", "ABSENT", "LATE", "EXCUSED"],
+          "description": "Daily attendance status."
+        },
+        "remarks": {
+          "type": "string",
+          "description": "Optional attendance remarks."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": ["studentId", "studentName", "rollNumber", "classId", "className", "dateKey", "status", "createdAt", "updatedAt"]
+    },
+    "FacultyMember": {
+      "title": "FacultyMember",
+      "description": "Teacher or campus staff profile.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "assignedClass": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "ON_LEAVE"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["fullName", "department", "subject", "status", "createdAt", "updatedAt"]
+    },
+    "CampusFacility": {
+      "title": "CampusFacility",
+      "description": "Physical campus room, lab, library, sports, or transport facility.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["LAB", "CLASSROOM", "LIBRARY", "SPORTS", "TRANSPORT", "HALL"]
+        },
+        "building": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["AVAILABLE", "OCCUPIED", "MAINTENANCE"]
+        },
+        "bookedBy": {
+          "type": "string"
+        },
+        "scheduleSlot": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["name", "category", "building", "capacity", "status", "createdAt", "updatedAt"]
+    },
+    "FeeInvoice": {
+      "title": "FeeInvoice",
+      "description": "Tuition or campus fee invoice linked to a student.",
+      "type": "object",
+      "properties": {
+        "studentId": {
+          "type": "string"
+        },
+        "studentName": {
+          "type": "string"
+        },
+        "className": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "paidAmount": {
+          "type": "number"
+        },
+        "dueDateKey": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "PARTIAL", "PAID", "OVERDUE"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["studentId", "studentName", "className", "title", "amount", "paidAmount", "dueDateKey", "status", "createdAt", "updatedAt"]
+    },
+    "CampusNotice": {
+      "title": "CampusNotice",
+      "description": "Campus circular, exam alert, or event announcement.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["GENERAL", "EXAM", "EVENT", "URGENT"]
+        },
+        "audience": {
+          "type": "string"
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["title", "body", "category", "audience", "pinned", "createdAt", "updatedAt"]
+    },
+    "ExamGrade": {
+      "title": "ExamGrade",
+      "description": "Exam or assessment grade record for a student.",
+      "type": "object",
+      "properties": {
+        "studentId": {
+          "type": "string"
+        },
+        "studentName": {
+          "type": "string"
+        },
+        "className": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "examName": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "maxScore": {
+          "type": "number"
+        },
+        "gradeLetter": {
+          "type": "string"
+        },
+        "term": {
+          "type": "string"
+        },
+        "assessmentType": {
+          "type": "string",
+          "enum": ["EXAM", "QUIZ", "LAB", "ASSIGNMENT", "PROJECT"]
+        },
+        "teacherNotes": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["studentId", "studentName", "className", "subject", "examName", "score", "maxScore", "gradeLetter", "createdAt", "updatedAt"]
+    },
+    "StudentDailyCheckIn": {
+      "title": "StudentDailyCheckIn",
+      "description": "Self-submitted daily attendance check-in record for a student.",
+      "type": "object",
+      "properties": {
+        "studentId": {
+          "type": "string"
+        },
+        "studentName": {
+          "type": "string"
+        },
+        "rollNumber": {
+          "type": "string"
+        },
+        "classId": {
+          "type": "string"
+        },
+        "className": {
+          "type": "string"
+        },
+        "dateKey": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PRESENT", "ABSENT", "LATE", "EXCUSED"]
+        },
+        "sessionName": {
+          "type": "string"
+        },
+        "checkInTimeLabel": {
+          "type": "string"
+        },
+        "locationNote": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["studentId", "studentName", "rollNumber", "classId", "className", "dateKey", "status", "sessionName", "checkInTimeLabel", "createdAt", "updatedAt"]
+    },
+    "ClassSchedulePeriod": {
+      "title": "ClassSchedulePeriod",
+      "description": "A scheduled daily class period showing subject, timing window, room, and assigned faculty member.",
+      "type": "object",
+      "properties": {
+        "classId": {
+          "type": "string"
+        },
+        "className": {
+          "type": "string"
+        },
+        "dayOfWeek": {
+          "type": "string",
+          "enum": ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
+        },
+        "periodNumber": {
+          "type": "integer"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "endTime": {
+          "type": "string"
+        },
+        "facultyId": {
+          "type": "string"
+        },
+        "facultyName": {
+          "type": "string"
+        },
+        "roomNumber": {
+          "type": "string"
+        },
+        "topicNotes": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["classId", "className", "dayOfWeek", "periodNumber", "subject", "startTime", "endTime", "facultyName", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/SchoolProfile" },
+      "description": "School workspace profile owned by authenticated user."
+    },
+    "/users/{userId}/classes/{classId}": {
+      "schema": { "$ref": "#/entities/SchoolClass" },
+      "description": "Academic classes and homeroom sections."
+    },
+    "/users/{userId}/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Student" },
+      "description": "Enrolled students."
+    },
+    "/users/{userId}/attendance/{recordId}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Daily student attendance records."
+    },
+    "/users/{userId}/student_checkins/{checkInId}": {
+      "schema": { "$ref": "#/entities/StudentDailyCheckIn" },
+      "description": "Student self-marked daily attendance check-ins."
+    },
+    "/users/{userId}/schedules/{scheduleId}": {
+      "schema": { "$ref": "#/entities/ClassSchedulePeriod" },
+      "description": "Daily class timetable periods with subjects, timings, rooms, and faculty."
+    },
+    "/users/{userId}/faculty/{facultyId}": {
+      "schema": { "$ref": "#/entities/FacultyMember" },
+      "description": "Teaching faculty and staff directory."
+    },
+    "/users/{userId}/facilities/{facilityId}": {
+      "schema": { "$ref": "#/entities/CampusFacility" },
+      "description": "Campus facilities, labs, halls, sports, and transport resources."
+    },
+    "/users/{userId}/fees/{feeId}": {
+      "schema": { "$ref": "#/entities/FeeInvoice" },
+      "description": "Student tuition and fee invoices."
+    },
+    "/users/{userId}/notices/{noticeId}": {
+      "schema": { "$ref": "#/entities/CampusNotice" },
+      "description": "School announcements and circulars."
+    },
+    "/users/{userId}/grades/{gradeId}": {
+      "schema": { "$ref": "#/entities/ExamGrade" },
+      "description": "Student exam scores and academic grades."
+    }
+  }
+}

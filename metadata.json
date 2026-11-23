@@ -1,0 +1,6 @@
+{
+  "name": "CampusPulse",
+  "description": "School management system for tracking student attendance, classes, faculty, grades, fees, notices, and campus facilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
